@@ -148,11 +148,10 @@ const createReceipt = async (payload) => {
 
     try {
       if (formData.paymentMethod === "UPI") {
-       const res = await postData("/api/payment/create-order", {
+  const data = await postData("/api/payment/create-order", {
   amount: total + shippingCost,
   userId: user._id
 });
-        const data = await res.json();
         if (!data.success) return alert("Payment init failed");
 
         const options = {
@@ -167,29 +166,26 @@ const createReceipt = async (payload) => {
           handler: async (response) => {
             const paymentId = data.paymentId;
 
-            const verifyRes = await postData("/api/payment/verify-payment", {
-            
-             
-              razorpay_payment_id: response.razorpay_payment_id,
-              razorpay_order_id: response.razorpay_order_id,
-              razorpay_signature: response.razorpay_signature,
-              paymentId,
-            });
-            
-
-            const verifyResult = await verifyRes.json();
+         const verifyResult = await postData("/api/payment/verify-payment", {
+  razorpay_payment_id: response.razorpay_payment_id,
+  razorpay_order_id: response.razorpay_order_id,
+  razorpay_signature: response.razorpay_signature,
+  paymentId,
+});
             if (!verifyResult.success) return alert("Payment verification failed");
 
-            const orderRes = await postData("/api/orders/create", {
-            
-          
-                userId: user._id, orderItems, shippingAddress: checkoutData,
-                paymentMethod: "UPI", itemsPrice: total,
-                shippingPrice: shippingCost, totalPrice: total + shippingCost,
-                paymentId, isPaid: true, status: "Paid",
-         
-            });
-            const orderResult = await orderRes.json();
+          const orderResult = await postData("/api/orders/create", {
+  userId: user._id,
+  orderItems,
+  shippingAddress: checkoutData,
+  paymentMethod: "UPI",
+  itemsPrice: total,
+  shippingPrice: shippingCost,
+  totalPrice: total + shippingCost,
+  paymentId,
+  isPaid: true,
+  status: "Paid",
+});
             if (orderResult.success) {
               alert("Payment successful & order placed!", false);
               await createReceipt({ userId: user._id, orderId: orderResult.order._id, paymentId, items: orderItems, billingDetails: checkoutData, paymentMethod: "UPI", amountPaid: total + shippingCost });
@@ -200,16 +196,15 @@ const createReceipt = async (payload) => {
         };
         new window.Razorpay(options).open();
       } else {
-        const orderRes = await fetch("http://localhost:4000/api/orders/create", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
+        const data = await postData("/api/orders/create", , {
+      
+      
             userId: user._id, orderItems, shippingAddress: checkoutData,
             paymentMethod: formData.paymentMethod, itemsPrice: total,
             shippingPrice: shippingCost, totalPrice: total + shippingCost,
-          }),
+          
         });
-        const data = await orderRes.json();
+       
         if (data.success) {
           alert("Order placed successfully!", false);
           await createReceipt({ userId: user._id, orderId: data.order._id, paymentId: null, items: orderItems, billingDetails: checkoutData, paymentMethod: formData.paymentMethod, amountPaid: total + shippingCost });
