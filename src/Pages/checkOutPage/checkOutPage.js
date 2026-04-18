@@ -196,7 +196,7 @@ const createReceipt = async (payload) => {
         };
         new window.Razorpay(options).open();
       } else {
-        const data = await postData("/api/orders/create", , {
+        const data = await postData("/api/orders/create", {
       
       
             userId: user._id, orderItems, shippingAddress: checkoutData,
