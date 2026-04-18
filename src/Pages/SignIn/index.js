@@ -35,7 +35,7 @@ const SignIn = () => {
         if (role === "admin") {
           localStorage.clear();
           window.name = JSON.stringify({ token: res.token, user: res.user });
-          window.location.href = "http://localhost:3001/admin/dashboard";
+          window.location.href = "https://shopkartify.netlify.app/admin/dashboard";
         } else {
           localStorage.setItem("token", res.token);
           localStorage.setItem("user", JSON.stringify(res.user));
@@ -96,7 +96,7 @@ const SignIn = () => {
           }));
 
 
-          window.location.href = `http://localhost:3001/admin/dashboard?token=${token}&user=${user}`;
+          window.location.href = `https://shopkartify.netlify.app/admin/dashboard?token=${token}&user=${user}`;
 
           
         } else {
