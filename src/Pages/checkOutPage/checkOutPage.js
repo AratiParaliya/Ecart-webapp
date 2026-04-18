@@ -162,21 +162,19 @@ const createReceipt = async (payload) => {
           description: "Order Payment",
           order_id: data.orderId,
 
- config: {
-    display: {
-      blocks: {
-        upi: {
-          name: "Pay via UPI",
-          instruments: [
-            { method: "upi", flow: "collect" },  // UPI ID input
-            { method: "upi", flow: "qr" },        // QR code
-            { method: "upi", flow: "intent" },    // UPI apps (PhonePe, GPay etc.)
-          ],
-        },
-      },
-      sequence: ["block.upi"],
-      preferences: { show_default_blocks: false },
-    },
+  method: {
+    upi: true,
+    card: false,
+    netbanking: false,
+    wallet: false,
+    emi: false,
+  },
+
+  prefill: {
+    contact: "9876543210",
+    email: "rahul@gmail.com",
+    method: "upi",
+    vpa: "success@razorpay", // pre-fills UPI ID field in test mode
   },
           handler: async (response) => {
            const paymentId = response.razorpay_payment_id;
