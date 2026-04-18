@@ -155,7 +155,7 @@ const createReceipt = async (payload) => {
         if (!data.success) return alert("Payment init failed");
 
         const options = {
-          key: "rzp_test_SVXTx4nc4AWLH2",
+          key: "rzp_test_SeyW9kHlwo6iis",
           amount: data.amount,
           currency: "INR",
           name: "Your Store",
