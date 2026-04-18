@@ -162,13 +162,7 @@ const createReceipt = async (payload) => {
           description: "Order Payment",
           order_id: data.orderId,
 
-  method: {
-    upi: true,
-    card: false,
-    netbanking: false,
-    wallet: false,
-    emi: false,
-  },
+
 
   prefill: {
     contact: "9876543210",
