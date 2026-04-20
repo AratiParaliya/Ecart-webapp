@@ -84,7 +84,7 @@ const SignIn = () => {
       context.setAlertBox({ open: true, error: false, msg: "Login successful!" });
       context.setisLogin(true);
       context.setisHeaderFooterShow(true);
-      
+      context.setisLogin(false);
       setTimeout(() => {
         const role = res.user?.role?.toLowerCase().trim();
 

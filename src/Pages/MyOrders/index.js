@@ -8,6 +8,8 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import Rating from "@mui/material/Rating";
 import TextField from "@mui/material/TextField";
+import { motion } from "framer-motion";
+
 
 const statusConfig = {
   Pending:    { bg: "#fff8e1", color: "#f59e0b", border: "#fde68a", dot: "#f59e0b" },
@@ -34,6 +36,20 @@ const StatusBadge = ({ status }) => {
   );
 };
 
+
+const containerVariant = {
+  hidden: {},
+  visible: {
+    transition: {
+      staggerChildren: 0.15
+    }
+  }
+};
+
+const cardVariant = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0 }
+};
 const MyOrders = () => {
   const [orders, setOrders] = useState([]);
   const [reviewMap, setReviewMap] = useState({});
@@ -144,9 +160,21 @@ const MyOrders = () => {
           </div>
         )}
 
+<motion.div
+  variants={containerVariant}
+  initial="hidden"
+  animate="visible"
+>
+  {orders.map((order) => (
+    <motion.div
+      className="mo-order"
+      key={order._id}
+      variants={cardVariant}
+      transition={{ duration: 0.5 }}
+      whileHover={{ y: -3 }}
+    >
         {/* order cards */}
-        {orders.map((order) => (
-          <div className="mo-order" key={order._id}>
+    
 
             {/* ── header ── */}
             <div className="mo-order-header">
@@ -180,8 +208,15 @@ const MyOrders = () => {
                   const key = `${item.productId}_${order._id}`;
                   const hasReview = reviewMap[key];
                   return (
-                    <div className="mo-item" key={idx}>
-                      <img
+                  
+                    <motion.div
+  className="mo-item"
+  key={idx}
+  initial={{ opacity: 0, x: -20 }}
+  whileInView={{ opacity: 1, x: 0 }}
+  transition={{ duration: 0.3, delay: idx * 0.1 }}
+  viewport={{ once: true }}
+>           <img
                         className="mo-item-img"
                         src={item.image || "https://via.placeholder.com/72"}
                         alt={item.name}
@@ -214,8 +249,10 @@ const MyOrders = () => {
                             <div className="mo-verified">✔ Verified purchase</div>
                           </>
                         )}
-                      </div>
-                    </div>
+                        </div>
+                           </motion.div>
+              
+                   
                   );
                 })}
               </div>
@@ -253,10 +290,11 @@ const MyOrders = () => {
               </button>
             </div>
 
-          </div>
+      
+       </motion.div>
         ))}
-      </div>
-
+     </motion.div>
+</div>
       {/* ── REVIEW MODAL ── */}
       <Dialog open={openReview} onClose={() => setOpenReview(false)} maxWidth="sm" fullWidth>
         <DialogTitle sx={{ fontSize: 16, fontWeight: 700, pb: 0 }}>

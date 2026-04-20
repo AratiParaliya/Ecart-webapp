@@ -6,7 +6,7 @@ import { Navigation } from "swiper/modules";
 import { TfiFullscreen } from "react-icons/tfi";
 import { IoMdHeart, IoMdHeartEmpty } from "react-icons/io";
 import { useContext, useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 import { MyContext } from "../../App";
 import { Link, useNavigate } from "react-router-dom";
 import { deleteData, fetchDataFromApi, postData } from "../../utils/api";
@@ -120,11 +120,19 @@ const isInWishlist = wishlistItems.some((w) => {
 });
 
   return (
-    <div className={`productItem ${itemView}`}   onMouseEnter={() => setHover(true)}
-      onMouseLeave={() => {
-        setHover(false);
-        setIndex(0); // reset
-      }}>
+
+ <motion.div
+  className={`productItem ${itemView}`}
+  initial={{ opacity: 0, y: 30 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ duration: 0.4 }}
+  viewport={{ once: true }}
+  onMouseEnter={() => setHover(true)}
+  onMouseLeave={() => {
+    setHover(false);
+    setIndex(0);
+  }}
+>
       
       <div className="imgWrapper">
        <Link to={`/product/${item?._id}`}>
@@ -174,7 +182,8 @@ const isInWishlist = wishlistItems.some((w) => {
           <span className="netPrice text-danger ml-2">${item?.price}</span>
         </div>
       </div>
-    </div>
+   
+      </motion.div>
   );
 };
 

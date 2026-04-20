@@ -1,11 +1,12 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./style.css";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Pages/Home";
 import { createContext, useEffect, useState } from "react";
 import axios from "axios";
+import { AnimatePresence } from "framer-motion";
 import Footer from "./Components/Footer";
 import ProductModal from "./Components/ProductModal";
 import Listing from "./Pages/Listing";
@@ -26,6 +27,20 @@ import VerifyStatus from "./Components/VerifiedSuccess";
 
 
 const MyContext = createContext();
+function AnimatedRoutes() {
+  const location = useLocation();
+
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<Home />} />
+        <Route path="/product/:id" element={<ProductDetails />} />
+        <Route path="/cart" element={<Cart />} />
+        {/* add all routes */}
+      </Routes>
+    </AnimatePresence>
+  );
+}
 
 function App() {
   const [isOpenProductModel, setisOpenProductModel] = useState(false);

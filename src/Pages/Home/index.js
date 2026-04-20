@@ -14,7 +14,7 @@ import { Navigation } from 'swiper/modules';
 import ProductItem from "../../Components/ProductItem";
 import HomeCat from '../../Components/HomeCat';
 import banner2 from '../../assets/images/banner2.jpg';
-
+import { motion } from "framer-motion";
 import coupon from '../../assets/images/coupon.jpg';
 import Services from '../../Components/services';
 import { Link } from 'react-router-dom';
@@ -35,8 +35,16 @@ const [products, setProducts] = useState([]);
 
 
 const trendingRef = useRef(null);
-
-
+const fadeUp = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
 useEffect(() => {
   getBestSellers();   // always run
   getNewProducts();
@@ -123,7 +131,7 @@ const getBestSellers = async () => {
 
   return (
     <>
-      
+      z
       <HomeBanner />
 <Services/>
      <HomeCat/>
@@ -138,15 +146,19 @@ const getBestSellers = async () => {
       const hasContent = banner.title || banner.desc;
 
       return (
-        <div
-          className={`side-banner ${hasContent ? "has-content" : ""}`}
-          key={banner._id}
-        >
+        
+  <motion.div
+  className={`side-banner ${hasContent ? "has-content" : ""}`}
+  key={banner._id}
+  initial={{ opacity: 0, y: -50 }}   // start from top
+  whileInView={{ opacity: 1, y: 0 }} // move down to position
+  transition={{ duration: 0.5 }}
+>
           <img src={banner.images?.[0]} alt={banner.title} />
 
           {hasContent && (
             <div className="side-banner-content">
-              
+    
               {banner.title && <h5>{banner.title}</h5>}
               
               {banner.desc && <p>{banner.desc}</p>}
@@ -158,7 +170,7 @@ const getBestSellers = async () => {
 
             </div>
           )}
-        </div>
+        </motion.div>
       );
     })}
 </div>
@@ -166,13 +178,22 @@ const getBestSellers = async () => {
             <div className='col-md-9 productRow '>
 
 {showNoTrendingMsg && (
-  <section ref={trendingRef} className="homeProducts">
+ <motion.section
+  ref={trendingRef}
+  className="homeProducts"
+  variants={fadeUp}
+  initial={{ opacity: 0, y: -40 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+  viewport={{ once: true }}
+
+>
   <div className="container ">
     <div className="alert alert-warning text-center">
       No trending products available in {context.selectedCountry}
     </div>
                   </div>
-                  </section>
+                  </motion.section>
 )}
 {context.selectedCountry && trendingProducts.length > 0 && (
 <section ref={trendingRef} className="homeProducts">
@@ -193,7 +214,15 @@ const getBestSellers = async () => {
       </div>
 
       {/* SWIPER LIKE BEST SELLER */}
-      <div className="product_row w-100 mt-4">
+      <motion.div
+  className="product_row w-100 mt-4"
+  variants={fadeUp}
+  initial={{ opacity: 0, y: -40 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+  viewport={{ once: true }}
+  
+>
         <Swiper
           slidesPerView={4}
           spaceBetween={10}
@@ -212,7 +241,7 @@ const getBestSellers = async () => {
             </SwiperSlide>
           ))}
         </Swiper>
-      </div>
+      </motion.div>
 
     </div>
   </section>
@@ -231,6 +260,7 @@ const getBestSellers = async () => {
               </div>
               
               <div className='product_row w-100 mt-4'>
+                
                  <Swiper
         slidesPerView={4}
                   spaceBetween={10}
@@ -248,7 +278,13 @@ const getBestSellers = async () => {
                  {Array.isArray(bestProducts) && bestProducts.length > 0 ? (
     bestProducts.map((item) => (
       <SwiperSlide key={item._id}>
-        <ProductItem item={item} />
+        <motion.div
+  initial={{ opacity: 0, y: -40 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+  >
+          <ProductItem item={item} />
+          </motion.div>
       </SwiperSlide>
     ))
   ) : (
@@ -283,27 +319,36 @@ const getBestSellers = async () => {
                   View All <IoIosArrowRoundForward/>
                 </Button></Link>
               </div>
-              
-             <div className='product_row productRow2 w-100 mt-4 d-flex'>
+
+
+<div
+  className="product_row productRow2 w-100 mt-4 d-flex"
+  
+>
   {newProducts.length > 0 ? (
     newProducts.map((item) => (
-      <ProductItem key={item._id} item={item} />
+    
+        <ProductItem item={item} />
+   
     ))
   ) : (
-      <div className="card shadow-sm border-0 w-100">
-  <div className="card-body text-center py-5">
-    
-    <div className="mb-3">
-      <i className="bi bi-search text-muted" style={{ fontSize: "40px" }}></i>
+    <div className="card shadow-sm border-0 w-100">
+      <div className="card-body text-center py-5">
+        <div className="mb-3">
+          <i className="bi bi-search text-muted" style={{ fontSize: "40px" }}></i>
+        </div>
+        <h5 className="text-muted mb-2">No Products Found</h5>
+      </div>
     </div>
-
-    <h5 className="text-muted mb-2">No Products Found</h5>
-    
-  </div>
-</div>
   )}
 </div>
-<div className='d-flex mt-5 bannerSec'>
+<motion.div
+className='d-flex mt-5 bannerSec'
+  initial={{ opacity: 0, y: -40 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+  >
+
   {offerBanners.slice(0, 2).map((banner, index) => (
     <div className='banner-b' key={banner._id}>
       
@@ -317,7 +362,7 @@ const getBestSellers = async () => {
 
     </div>
   ))}
-</div>
+</motion.div>
 
             </div>
 
@@ -327,7 +372,13 @@ const getBestSellers = async () => {
 
       </section>
 
-      <section className='newsLetterSection mt-3 mb-3'>
+<motion.section
+className='newsLetterSection mt-3 mb-3'
+  initial={{ opacity: 0, y: -40 }}
+whileInView={{ opacity: 1, y: 0 }}
+transition={{ duration: 0.8, ease: [0.25, 1, 0.5, 1] }}
+  >
+     
         <div className='container'>
           <div className='row'>
             <div className='col-md-6'>
@@ -351,7 +402,7 @@ const getBestSellers = async () => {
           </div>
         </div>
 
-      </section>
+      </motion.section>
 
      
     </>
