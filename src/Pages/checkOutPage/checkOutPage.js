@@ -10,6 +10,7 @@ const CheckOut = () => {
   const [cartData, setCartData] = useState([]);
   const [states, setStates] = useState([]);
   const [selectedShipping, setSelectedShipping] = useState("standard");
+  const [orderSuccess, setOrderSuccess] = useState(false);
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -163,13 +164,6 @@ const createReceipt = async (payload) => {
           order_id: data.orderId,
 
 
-
-  prefill: {
-    contact: "9876543210",
-    email: "rahul@gmail.com",
-    method: "upi",
-    vpa: "success@razorpay", // pre-fills UPI ID field in test mode
-  },
           handler: async (response) => {
            const paymentId = response.razorpay_payment_id;
 
@@ -194,11 +188,25 @@ const createReceipt = async (payload) => {
   status: "Paid",
 });
             if (orderResult.success) {
-              alert("Payment successful & order placed!", false);
-              await createReceipt({ userId: user._id, orderId: orderResult.order._id, paymentId, items: orderItems, billingDetails: checkoutData, paymentMethod: "UPI", amountPaid: total + shippingCost });
-              navigate(`/myOrders/${user._id}`);
-              await clearCart(user._id);
-            } else { alert("Order save failed"); }
+
+  setOrderSuccess(true);
+
+  await createReceipt({
+    userId: user._id,
+    orderId: orderResult.order._id,
+    paymentId,
+    items: orderItems,
+    billingDetails: checkoutData,
+    paymentMethod: "UPI",
+    amountPaid: total + shippingCost
+  });
+
+  setTimeout(async () => {
+    await clearCart(user._id);
+    navigate(`/myOrders/${user._id}`);
+  }, 3000);
+            }
+            else { alert("Order save failed"); }
           },
         };
         new window.Razorpay(options).open();
@@ -213,11 +221,25 @@ const createReceipt = async (payload) => {
         });
        
         if (data.success) {
-          alert("Order placed successfully!", false);
-          await createReceipt({ userId: user._id, orderId: data.order._id, paymentId: null, items: orderItems, billingDetails: checkoutData, paymentMethod: formData.paymentMethod, amountPaid: total + shippingCost });
-          navigate(`/myOrders/${user._id}`);
-          await clearCart(user._id);
-        } else { alert("Order failed"); }
+
+  setOrderSuccess(true);
+
+  await createReceipt({
+    userId: user._id,
+    orderId: data.order._id,
+    paymentId: null,
+    items: orderItems,
+    billingDetails: checkoutData,
+    paymentMethod: formData.paymentMethod,
+    amountPaid: total + shippingCost
+  });
+
+  setTimeout(async () => {
+    await clearCart(user._id);
+    navigate(`/myOrders/${user._id}`);
+  }, 3000);
+        }
+        else { alert("Order failed"); }
       }
     } catch (e) {
       console.log(e);
@@ -225,6 +247,26 @@ const createReceipt = async (payload) => {
     }
   };
 
+if (orderSuccess) {
+  return (
+    <div className="success-full">
+      
+      <div className="success-content">
+
+        {/* BIG CHECK ICON */}
+        <div className="success-icon">
+          ✓
+        </div>
+
+        <h1>Order Confirmed</h1>
+        <p>Your order has been placed successfully.</p>
+        <p className="sub-text">Redirecting to your orders...</p>
+
+      </div>
+
+    </div>
+  );
+}
   /* ─── render ─── */
   return (
     <>
