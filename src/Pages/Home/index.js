@@ -131,7 +131,7 @@ const getBestSellers = async () => {
 
   return (
     <>
-      z
+      
       <HomeBanner />
 <Services/>
      <HomeCat/>

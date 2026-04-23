@@ -4,83 +4,86 @@ import { FaRegImages } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/autoplay";
-
 import { Navigation, Autoplay } from "swiper/modules";
 import { fetchDataFromApi } from "../../utils/api";
 
 const HomeBanner = () => {
-
   const [banners, setBanners] = useState([]);
 
-  
-useEffect(() => {
-  fetchDataFromApi("/api/banner?type=home&status=true").then((res) => {
+  useEffect(() => {
+    fetchDataFromApi("/api/banner?type=home&status=true").then((res) => {
+      const bannerData = res?.data || res?.banners || [];
+      setBanners(bannerData.filter((item) => item.status === true));
+    });
+  }, []);
 
-    const bannerData = res?.data || res?.banners || [];
+  return (
+    <>
+      <div className="home-banner-section">
+        {banners.length > 0 ? (
+          <Swiper
+            slidesPerView={1}
+            navigation={true}
+            loop={true}
+            autoplay={{ delay: 3500, disableOnInteraction: false }}
+            modules={[Navigation, Autoplay]}
+            className="home-banner-swiper"
+          >
+            {banners.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div
+                  className="hb-slide"
+                  style={{
+                    background: item.bgColor
+                      ? item.bgColor
+                      : 'linear-gradient(135deg, #f0f4ff 0%, #e8f0fc 60%, #fce7f3 100%)',
+                  }}
+                >
+                  {/* Background decorative circles */}
+                  <div className="hb-deco hb-deco-1" />
+                  <div className="hb-deco hb-deco-2" />
 
-    const activeBanners = bannerData.filter(
-      (item) => item.status === true
-    );
+                  <div className="hb-inner">
+                    {/* Text side */}
+                    <div className="hb-content">
+                      {item.tag && <span className="hb-tag">{item.tag}</span>}
+                      <h1 className="hb-title">{item.title}</h1>
+                      {item.desc && <p className="hb-desc">{item.desc}</p>}
+                      <button className="hb-btn">
+                        Visit Collections
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" style={{ marginLeft: 6 }}>
+                          <path d="M5 12h14M12 5l7 7-7 7"/>
+                        </svg>
+                      </button>
+                    </div>
 
-    setBanners(activeBanners);
-  });
-}, []);
-
-return (
-  <div className="homeBannerSection mt-2">
-    
-    {banners.length > 0 ? (
-      <Swiper
-        slidesPerView={1}
-        navigation={true}
-        loop={true}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        modules={[Navigation, Autoplay]}
-      >
-
-        {banners.map((item, index) => (
-          <SwiperSlide key={index}>
-            <div className="banner-slide">
-              <div className="container">
-                <div className="row align-items-center">
-
-                  <div className="col-md-7">
-                      <div className="banner-content">
-                    <h1>{item.title}</h1>
-                      <p>{item.desc}</p>
-                        <button>Visit Collections</button>
-                      </div>
+                    {/* Image side */}
+                    <div className="hb-img-wrap">
+                      <div className="hb-img-bg" />
+                      <img
+                        src={item.images?.[0] || item.image}
+                        alt={item.title || 'Banner'}
+                        className="hb-img"
+                      />
+                    </div>
                   </div>
-
-                  <div className="col-md-5 text-center">
-                        <div className="banner-img">
-                      <img src={item.images[0]} alt="banner" />
-                      </div>
-                  </div>
-
                 </div>
-              </div>
-            </div>
-          </SwiperSlide>
-        ))}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        ) : (
+          <div className="hb-empty">
+            <FaRegImages className="hb-empty-icon" />
+            <h2>No Banners Available</h2>
+            <p>Looks like there are no active banners right now.</p>
+            <button className="hb-btn">Explore Products</button>
+          </div>
+        )}
+      </div>
 
-      </Swiper>
-    ) : (
-  <div className="no-banner d-flex align-items-center justify-content-center">
-  <div className="text-center content">
-    <FaRegImages className="icon" />
-    <h2>No Banners Available</h2>
-    <p>Looks like there are no active banners right now.</p>
-    <button className="shop-btn">Explore Products</button>
-  </div>
-</div>
-    )}
-
-  </div>
-);
+    
+    </>
+  );
 };
 
 export default HomeBanner;

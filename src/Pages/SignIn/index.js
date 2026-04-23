@@ -39,7 +39,9 @@ const SignIn = () => {
         } else {
           localStorage.setItem("token", res.token);
           localStorage.setItem("user", JSON.stringify(res.user));
+             
           navigate("/");
+           context.setisHeaderFooterShow(true);
         }
       }
     } catch (error) { console.log(error); }
@@ -82,9 +84,9 @@ const SignIn = () => {
 
       // ✅ SUCCESS
       context.setAlertBox({ open: true, error: false, msg: "Login successful!" });
-      context.setisLogin(true);
-      context.setisHeaderFooterShow(true);
-      context.setisLogin(false);
+   context.setisLogin(true);
+context.setUser(res.user);   // ⭐ VERY IMPORTANT
+context.setisHeaderFooterShow(true);
       setTimeout(() => {
         const role = res.user?.role?.toLowerCase().trim();
 

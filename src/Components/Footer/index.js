@@ -43,7 +43,7 @@ const Footer = () => {
               <p >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.</p>
           </div>
             {/* ABOUT */}
-          <div className="col m[-2">
+          <div className="col-md-2 ">
             <h5>ABOUT US</h5>
             <ul>
               <li><Link to="#">Careers</Link></li>
@@ -55,7 +55,7 @@ const Footer = () => {
           </div>
 
           {/* CUSTOMER CARE */}
-          <div className="col">
+          <div className="col-md-2">
             <h5>CUSTOMER CARE</h5>
             <ul>
               <li><Link to="#">Help Center</Link></li>
@@ -67,7 +67,7 @@ const Footer = () => {
           </div>
 
           {/* CONTACT */}
-          <div className="col">
+          <div className="col-md-2">
             <h5>CONTACT US</h5>
             <ul>
               <li>
@@ -81,7 +81,7 @@ const Footer = () => {
           </div>
 
           {/* EXTRA */}
-          <div className="col">
+          <div className="col-md-2">
             <h5>INFORMATION</h5>
             <ul>
               <li><Link to="#">About Us</Link></li>

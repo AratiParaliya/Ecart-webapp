@@ -1,6 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import "./style.css";
+import "./responsive.css";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Header from "./Components/Header";
 import Home from "./Pages/Home";
@@ -49,7 +50,7 @@ function App() {
   const [isHeaderFooterShow, setisHeaderFooterShow] = useState(true);
   const [isLogin, setisLogin] = useState(false);
 const [search, setSearch] = useState("");
-
+const [user, setUser] = useState(null);
 
 const [productId, setProductId] = useState(null);
 const [cartItems, setCartItems] = useState(
@@ -68,6 +69,8 @@ const [cartItems, setCartItems] = useState(
 
 
   const values = {
+    user,
+    setUser,
     countryList,
     setCountryList,
     setselectedCountry,
