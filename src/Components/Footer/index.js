@@ -3,48 +3,51 @@ import { LuShirt } from "react-icons/lu";
 import { TbTruckDelivery, TbDiscount } from "react-icons/tb";
 import { CiBadgeDollar } from "react-icons/ci";
 import { FaFacebookF, FaTwitter, FaInstagram, FaShoppingBag } from "react-icons/fa";
-import { FiShoppingBag } from "react-icons/fi";
 
 const Footer = () => {
   return (
-    <footer>
+    <footer className="footer">
       <div className="container">
 
-        {/* TOP INFO (UNCHANGED UI) */}
-        <div className="topInfo row">
-          <div className="col d-flex align-items-center">
-            <span><LuShirt /></span>
-            <span className="ml-2">Everyday fresh products</span>
+        {/* TOP INFO */}
+        <div className="footer-topInfo">
+          <div className="footer-topInfo-col">
+            <span className="icon"><LuShirt /></span>
+            <span>Fresh products daily</span>
           </div>
-
-          <div className="col d-flex align-items-center">
-            <span><TbTruckDelivery /></span>
-            <span className="ml-2">Free delivery for order over $70</span>
+          <div className="footer-topInfo-col">
+            <span className="icon"><TbTruckDelivery /></span>
+            <span>Free delivery over $70</span>
           </div>
-
-          <div className="col d-flex align-items-center">
-            <span><TbDiscount /></span>
-            <span className="ml-2">Daily Mega Discounts</span>
+          <div className="footer-topInfo-col">
+            <span className="icon"><TbDiscount /></span>
+            <span>Daily mega discounts</span>
           </div>
-
-          <div className="col d-flex align-items-center">
-            <span><CiBadgeDollar /></span>
-            <span className="ml-2">Best price on the market</span>
+          <div className="footer-topInfo-col">
+            <span className="icon"><CiBadgeDollar /></span>
+            <span>Best market prices</span>
           </div>
         </div>
 
-        {/* UPDATED LINKS DATA */}
-        <div className="linksWrap row mt-4">
-  <div className="col-md-4">
-        <div className="logo d-flex mb-2 align-items-center">
-  <FaShoppingBag size={40} />
-  <h1 className="ms-2 pl-2">Multimart</h1>
-</div>
-              <p >Lorem ipsum dolor sit amet, consectetur adipiscing elit. Auctor libero id et, in gravida. Sit diam duis mauris nulla cursus. Erat et lectus vel ut sollicitudin elit at amet.</p>
+        {/* LINKS */}
+        <div className="footer-links">
+
+          {/* BRAND */}
+          <div className="footer-brand">
+            <div className="footer-logo">
+              <FaShoppingBag size={34} />
+              <h1>Multimart</h1>
+            </div>
+            <p className="footer-brand-desc">
+              Your one-stop destination for quality products at unbeatable prices.
+              We bring the best brands and freshest items straight to your doorstep —
+              fast, reliable, and always affordable.
+            </p>
           </div>
-            {/* ABOUT */}
-          <div className="col-md-2 ">
-            <h5>ABOUT US</h5>
+
+          {/* ABOUT */}
+          <div className="footer-col">
+            <h5>About Us</h5>
             <ul>
               <li><Link to="#">Careers</Link></li>
               <li><Link to="#">Our Stores</Link></li>
@@ -55,8 +58,8 @@ const Footer = () => {
           </div>
 
           {/* CUSTOMER CARE */}
-          <div className="col-md-2">
-            <h5>CUSTOMER CARE</h5>
+          <div className="footer-col">
+            <h5>Customer Care</h5>
             <ul>
               <li><Link to="#">Help Center</Link></li>
               <li><Link to="#">How to Buy</Link></li>
@@ -67,22 +70,18 @@ const Footer = () => {
           </div>
 
           {/* CONTACT */}
-          <div className="col-md-2">
-            <h5>CONTACT US</h5>
+          <div className="footer-col">
+            <h5>Contact Us</h5>
             <ul>
-              <li>
-                <Link to="#">
-                  70 Washington Square South, New York, NY 10012
-                </Link>
-              </li>
-              <li><Link to="#">Email: uilib.help@gmail.com</Link></li>
-              <li><Link to="#">Phone: +1 1123 456 780</Link></li>
+              <li><Link to="#">70 Washington Square South, New York, NY 10012</Link></li>
+              <li><Link to="#">uilib.help@gmail.com</Link></li>
+              <li><Link to="#">+1 1123 456 780</Link></li>
             </ul>
           </div>
 
-          {/* EXTRA */}
-          <div className="col-md-2">
-            <h5>INFORMATION</h5>
+          {/* INFORMATION */}
+          <div className="footer-col">
+            <h5>Information</h5>
             <ul>
               <li><Link to="#">About Us</Link></li>
               <li><Link to="#">Delivery Info</Link></li>
@@ -95,22 +94,13 @@ const Footer = () => {
         </div>
 
         {/* COPYRIGHT */}
-        <div className="copyright mt-3 pt-3 pb-3 d-flex">
-          <p className="mb-0">
-            © 2024 Multimart. All rights reserved
-          </p>
-
-          <ul className="list list-inline ml-auto mb-0">
-            <li className="list-inline-item">
-              <Link to="#"><FaFacebookF /></Link>
-            </li>
-            <li className="list-inline-item">
-              <Link to="#"><FaTwitter /></Link>
-            </li>
-            <li className="list-inline-item">
-              <Link to="#"><FaInstagram /></Link>
-            </li>
-          </ul>
+        <div className="footer-copyright">
+          <p>© 2024 Multimart. All rights reserved.</p>
+          <div className="footer-socials">
+            <Link to="#"><FaFacebookF /></Link>
+            <Link to="#"><FaTwitter /></Link>
+            <Link to="#"><FaInstagram /></Link>
+          </div>
         </div>
 
       </div>

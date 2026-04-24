@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { MyContext } from "../../App";
 import { useNavigate, useParams } from "react-router-dom";
 import { editData, fetchDataFromApi } from "../../utils/api";
 import { Button, Chip, Divider, CircularProgress, Alert, AlertTitle } from "@mui/material";
@@ -18,7 +19,7 @@ const OrderDetails = () => {
   const [cancelReason, setCancelReason] = useState("");
   const [cancelNote, setCancelNote] = useState("");
   const navigate = useNavigate();
-
+const context = useContext(MyContext);
   useEffect(() => {
     getOrder();
     const interval = setInterval(getOrder, 10000);
@@ -61,7 +62,13 @@ const OrderDetails = () => {
     if (!cancelReason) return;
     const res = await editData(`/api/orders/cancel/${order._id}`, { reason: cancelReason, note: cancelNote });
     if (res?.success) { setOpenCancel(false); getOrder(); }
-    else alert(res?.msg || "Cancel failed");
+  else {
+  context.setAlertBox({
+    open: true,
+    error: true,
+    msg: res?.msg || "Cancel failed"
+  });
+}
   };
 
   const downloadInvoice = async () => {

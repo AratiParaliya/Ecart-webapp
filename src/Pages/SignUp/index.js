@@ -216,9 +216,7 @@ const SignUp = () => {
 
       <div className="container">
         <div className="box card p-3 shadow border-0">
-          <div className="text-center mb-3">
-            <img src={Logo} alt="logo" style={{ width: "80px" }} />
-          </div>
+      
 
           {/* ✅ onSubmit={handleSignUp} — THIS WAS THE BUG */}
           <form className="mt-3" onSubmit={handleSignUp}>

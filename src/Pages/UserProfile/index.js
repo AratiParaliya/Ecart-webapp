@@ -1,13 +1,15 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import { editData, fetchDataFromApi } from "../../utils/api";
 import { MdCameraAlt } from "react-icons/md";
+import { MyContext } from "../../App";
 
 const UserProfile = () => {
   const [image, setImage] = useState("");
   const [preview, setPreview] = useState("");
   const [saving, setSaving] = useState(false);
+  const context = useContext(MyContext);
   const [formData, setFormData] = useState({
     name: "", email: "", phone: "", firstName: "", lastName: "",
     companyName: "", address1: "", address2: "", city: "",
@@ -79,8 +81,19 @@ useEffect(() => {
     if (image) form.append("image", image);
     const res = await editData(`/api/user/${user._id}`, form, true);
     setSaving(false);
-    if (!res?.error) alert("Profile updated successfully!");
-    else alert("Failed to update profile");
+     if (!res?.error) {
+    context.setAlertBox({
+        open: true,
+        error:false,
+        msg: 'Profile updated successfully',
+      });
+  } else {
+    context.setAlertBox({
+        open: true,
+        error:true,
+        msg: 'Failed to update profile',
+      });
+  }
   };
 
   const fieldStyle = { marginBottom: "16px" };

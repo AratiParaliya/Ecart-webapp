@@ -4821,3 +4821,168 @@ footer .socialLinks a:hover {
           .home-banner-swiper .swiper-button-prev,
           .home-banner-swiper .swiper-button-next { display: none !important; }
         }
+
+                /* =========================
+           PAGE LAYOUT
+        ========================= */
+                .signInPage {
+                    min-height: 100vh;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    background: #f5f7fb;
+                    padding: 20px;
+                }
+        
+                .signInPage .container {
+                    width: 100%;
+                    max-width: 500px;
+                }
+        
+                /* =========================
+           CARD BOX
+        ========================= */
+                .signInPage .box {
+                    width: 100%;
+                    border-radius: 12px;
+                    padding: 30px !important;
+                }
+        
+                /* =========================
+           LOGO
+        ========================= */
+                .signInPage img {
+                    width: 80px;
+                }
+        
+                /* =========================
+           FORM
+        ========================= */
+                .signInPage .form-group {
+                    margin-bottom: 18px;
+                }
+        
+                .signInPage h2 {
+                    text-align: center;
+                    font-weight: 600;
+                }
+        
+                /* =========================
+           BUTTONS
+        ========================= */
+                .btn-blue {
+                    background: #0f172a !important;
+                    color: #fff !important;
+                }
+        
+                .btn-big {
+                    height: 45px;
+                    font-size: 14px !important;
+                }
+        
+                /* =========================
+           LINK TEXT
+        ========================= */
+                .txt {
+                    font-size: 13px;
+                    text-align: center;
+                    margin-top: 10px;
+                }
+        
+                .border-effect {
+                    color: #2563eb;
+                    font-weight: 500;
+                }
+        
+                /* =========================
+           EMAIL ALERT BOX
+        ========================= */
+                .email-alert {
+                    background: #FCEBEB;
+                    border: 1px solid #F09595;
+                    border-radius: 10px;
+                    padding: 14px 16px;
+                    margin-top: 16px;
+                    display: flex;
+                    gap: 12px;
+                }
+        
+                /* =========================
+           SVG SHAPE FIX
+        ========================= */
+                .shape-bottom {
+                    position: absolute;
+                    bottom: 0;
+                    width: 100%;
+                    z-index: -1;
+                }
+        
+                /* =========================
+           TABLET
+        ========================= */
+                @media (max-width: 992px) {
+                    .signInPage .box {
+                        padding: 25px !important;
+                    }
+                }
+        
+                /* =========================
+           MOBILE
+        ========================= */
+                @media (max-width: 768px) {
+        
+                    .signInPage {
+                        padding: 10px;
+                    }
+        
+                    .signInPage .box {
+                        padding: 20px !important;
+                    }
+        
+                    .signInPage h2 {
+                        font-size: 22px;
+                    }
+        
+                    .btn-big {
+                        height: 42px;
+                        font-size: 13px !important;
+                    }
+        
+                    /* stack buttons */
+                    .signInPage .d-flex {
+                        flex-direction: column !important;
+                        gap: 10px;
+                    }
+        
+                    .signInPage .d-flex .btn,
+                    .signInPage .d-flex a {
+                        width: 100%;
+                    }
+        
+                    /* fix cancel button spacing */
+                    .signInPage .ml-3 {
+                        margin-left: 0 !important;
+                    }
+                }
+        
+                /* =========================
+           SMALL MOBILE
+        ========================= */
+                @media (max-width: 480px) {
+        
+                    .signInPage img {
+                        width: 65px;
+                    }
+        
+                    .signInPage h2 {
+                        font-size: 20px;
+                    }
+        
+                    .txt {
+                        font-size: 12px;
+                    }
+        
+                    .email-alert {
+                        flex-direction: column;
+                    }
+                }
