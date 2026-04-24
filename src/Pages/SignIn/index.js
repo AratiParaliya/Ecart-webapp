@@ -136,9 +136,7 @@ context.setisHeaderFooterShow(true);
 
       <div className="container">
         <div className="box card p-3 shadow border-0">
-          <div className="text-center mb-2">
-            <img src={Logo} alt="logo" style={{ width: "80px" }} />
-          </div>
+        
 
           <form className="mt-0" onSubmit={handleSubmit}>
             <h2 className="mb-4">Sign In</h2>
